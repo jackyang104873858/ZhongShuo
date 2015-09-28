@@ -1,0 +1,107 @@
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+			.sidebar {
+				width: 200px;
+				background: #6ecadc;
+			}
+			table, tr, td{
+				border-spacing: 0px 0px;
+			}
+			#smsContent {
+				overflow: hidden;
+			}
+			#smsContent div {
+				padding: 0.5em;
+			}
+			.btl{
+				background: url(../images/sms/topleft.jpg);
+				width:  28px;
+				height: 20px;
+			}
+			.bt{
+				background: url(../images/sms/top.jpg);
+				height: 20px;
+			}
+			.btr{
+				background: url(../images/sms/topright.jpg);
+				width: 21px;
+				height: 20px;
+			}
+			.bcl{
+				background: url(../images/sms/centerleft.jpg) ;
+				width: 28px;
+			}
+			.bc{
+				background: url(../images/sms/center.jpg);
+			}
+			.bcr{
+				background: url(../images/sms/centerright.jpg);
+				width: 21px;
+			}
+			.bbl{
+				background: url(../images/sms/bottomleft.jpg);
+				width: 28px;
+				height: 24px;
+			}
+			.bb{
+				background: url(../images/sms/bottom.jpg);
+				height: 24px;
+			}
+			.bbr{
+				background: url(../images/sms/bottomright.jpg);
+				width: 21px;
+				height: 24px;
+			}
+			.gtl{
+				background: url(../images/sms/topleft2.jpg);
+				width:  21px;
+				height: 20px;
+			}
+			.gt{
+				background: url(../images/sms/top2.jpg);
+				height: 20px;
+				margin-left: 21px;
+			}
+			.gtr{
+				background: url(../images/sms/topright2.jpg);
+				width: 27px;
+				height: 20px;
+			}
+			.gcl{
+				background: url(../images/sms/centerleft2.jpg) ;
+				width: 21px;
+				margin-top: 20px;
+			}
+			.gc{
+				background: url(../images/sms/center2.jpg);
+			}
+			.gcr{
+				background: url(../images/sms/centerright2.jpg) -1px repeat-y;
+				width: 27px;
+			}
+			.gbl{
+				background: url(../images/sms/bottomleft2.jpg);
+				width: 21px;
+				height: 24px;
+			}
+			.gb{
+				background: url(../images/sms/bottom2.jpg);
+				height: 24px;
+			}
+			.gbr{
+				background: url(../images/sms/bottomright2.jpg) -1px;
+				width: 27px;
+				height: 24px;
+			}
+			.fl{
+				float: left;
+			}
+			.fr{
+				float: right;
+			}
+			.newline{
+				clear: both;
+				margin-top: 10px;
+			}

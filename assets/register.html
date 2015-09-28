@@ -1,0 +1,110 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>注册</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="众说, 会议互动, 大屏互动, 微信墙" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <!-- Bootstrap Core CSS -->
+<link href="styles/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="styles/bg/style.css" rel='stylesheet' type='text/css' />
+<link href="styles/bg/font-awesome.css" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="styles/tinybox.css">
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.query.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/tinybox.js"></script>
+<script type="text/javascript">
+  jQuery.validator.addMethod("mobile", function(value, element) {
+    return this.optional(element) || /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(value);
+  });
+  $(document).ready(function(){
+    $('#regForm').validate({
+      rules: {
+        mobile: {
+          required: true,
+          mobile: true
+        },
+        email: {
+          required: true,
+          email: true
+        },
+        password: {
+          required: true,
+          minlength: 6
+        },
+        pwdConfirm: {
+          required: true,
+          minlength: 6,
+          equalTo: "#password"
+        }
+      },
+      messages: {
+        mobile: {
+          required: '请输入手机号',
+          mobile: '请输入正确的手机号'
+        },
+        email: {
+          required: '请输入电子邮箱',
+          email: '请输入正确的邮箱'
+        },
+        password: {
+          required: '请输入密码',
+          minlength: '密码最少6位'
+        },
+        pwdConfirm: {
+          required: '请再次输入密码',
+          equalTo: '两次输入的密码不一致'
+        }
+      }
+    });
+
+    var field = $.query.get('field');
+    if(field) {
+      TINY.box.show({html:'请准确填写完整注册信息!',animate:false,close:false,boxid:'error',width:250});
+    }
+    var fail = $.query.get('fail');
+    if(fail) {
+      TINY.box.show({html:'注册失败，您的手机号或邮箱已经注册过众说账号!',animate:false,close:false,boxid:'error',width:250});
+    }
+  });
+</script>
+<!----webfonts--->
+<link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+<!---//webfonts--->  
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<style type="text/css">.error{color:red;}</style>
+</head>
+<body id="login">
+  <div class="login-logo">
+    <a href="index.html"><img src="images/bg/logo.png" alt=""/></a>
+  </div>
+  <h2 class="form-heading">注册</h2>
+  <form class="form-signin app-cam" action="user/register" id="regForm" method="POST">
+      <p>请输入您的个人信息</p>
+      <input type="text" class="form-control1" placeholder="手机号" autofocus="" name="mobile">
+      <input type="text" class="form-control1" placeholder="邮箱" autofocus="" name="email">
+      <input type="password" class="form-control1" placeholder="密码" name="password" id="password">
+      <input type="password" class="form-control1" placeholder="密码确认" name="pwdConfirm">
+      <br>
+        <label class="checkbox-custom check-success">
+            <input type="checkbox" value="同意协议条款" id="checkbox1"> <label for="checkbox1">我同意政策与隐私条款</label>
+        </label>
+      <button class="btn btn-lg btn-success1 btn-block" type="submit">确定提交</button>
+      <div class="registration">
+          已经注册？立即
+          <a class="" href="login.html">
+              登录
+          </a>
+      </div>
+  </form>
+   <div class="copy_layout login register">
+      <p>Copyright &copy; 2015.北京品竹科技有限公司版权所有</p>
+   </div>
+</body>
+</html>

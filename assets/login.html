@@ -1,0 +1,63 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>登录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="众说, 会议互动, 大屏互动, 微信墙" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <!-- Bootstrap Core CSS -->
+<link href="styles/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="styles/bg/style.css" rel='stylesheet' type='text/css' />
+<link href="styles/bg/font-awesome.css" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="styles/tinybox.css">
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!----webfonts--->
+<link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+<!---//webfonts--->  
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.query.js"></script>
+<script type="text/javascript" src="js/tinybox.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var fail = $.query.get('fail');
+    if(fail) {
+      TINY.box.show({html:'用户名或密码不正确!',animate:false,close:false,boxid:'error',width:250});
+    } 
+  });
+</script>
+</head>
+<body id="login">
+  <div class="login-logo">
+    <a href="index.html"><img src="images/bg/logo.png" alt=""/></a>
+  </div>
+  <h2 class="form-heading">登录</h2>
+  <div class="app-cam">
+	  <form action="User/login" method="POST">
+  		<input type="text" class="text" value="邮箱／手机号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱／手机号';}" name="account">
+  		<input type="password" value="输入密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '输入密码';}" name="password">
+  		<div class="submit"><input type="submit" onclick="myFunction()" value="登录"></div>
+  		<div class="login-social-link">
+            <a href="index.html" class="facebook">
+                QQ登录
+            </a>
+            <a href="index.html" class="twitter">
+                微信登录
+            </a>
+          </div>
+  		<ul class="new">
+  			<li class="new_left"><p><a href="#">忘记密码?</a></p></li>
+  			<li class="new_right"><p class="sign">还没有账号？马上<a href="register.html"> 注册</a></p></li>
+  			<div class="clearfix"></div>
+  		</ul>
+	</form>
+  </div>
+   <div class="copy_layout login">
+      <p>Copyright &copy; 2015.北京品竹科技有限公司版权所有</p>
+   </div>
+</body>
+</html>
