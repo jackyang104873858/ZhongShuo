@@ -141,7 +141,7 @@ module.exports = {
                         var isShowCover = req.param('isShowCover');
 						var content = data.replace(/\{title\}/g, article.title)
 							.replace(/\{author\}/g, article.author)
-                            .replace(/\{cover\}/g, 'http://' + req.headers.host + article.cover.replace('..', ''))
+                            .replace(/\{cover\}/g, 'http://www.zhshuo.com' + article.cover.replace('..', ''))
 							.replace(/\{desc\}/g, article.desc)
 							.replace(/\{content\}/g, isShowCover == 'true' ? ('<img src="' + article.cover + '" width="100%" />' + article.content) : article.content)
 							.replace(/\{date\}/g, article.date);
