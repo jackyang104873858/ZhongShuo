@@ -10,6 +10,7 @@ module.exports = {
 		if(req.method == 'POST') {
 			var str = req.param('str', null);
 			var type = req.param('type', null);
+			var dir = req.param('dir');
 			var ext = '';
 			switch(type){
 				case 'image/png':
@@ -31,8 +32,11 @@ module.exports = {
 				var bitmap = new Buffer(content, 'base64');
 				var moment = require('moment');
 				var fileName = moment(new Date()).format('YYYYMMDDHHmmss') + ext;
-				fs.writeFileSync('./assets/images/avatar/' + fileName, bitmap);
-				res.json({src:'../images/avatar/'+ fileName});
+				if(!fs.existsSync('./assets/images/' + dir)) {
+					fs.mkdirSync('./assets/images/' + dir);
+				}
+				fs.writeFileSync('./assets/images/' + dir + '/' + fileName, bitmap);
+				res.json({src:'../images/' + dir + '/'+ fileName});
 			}
 		}
 	}

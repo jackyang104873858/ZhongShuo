@@ -9,8 +9,8 @@ module.exports = {
 	index: function(req, res) {
 		res.render('Bg/index');
 	},
-	editor: function(req, res) {
-		res.render('Bg/editor');
+	newArticle: function(req, res) {
+		res.render('Bg/newArticle');
 	},
 	ueditor: function(req, res) {
 		var act = req.param('action');
@@ -116,7 +116,7 @@ module.exports = {
 				break;
 		}
 	},
-	save: function(req, res) {
+	saveArticle: function(req, res) {
 		var fs = require('fs');
 		var filePath = './assets/templates/wx.html';
 		fs.exists(filePath,function(exists) {
@@ -129,14 +129,34 @@ module.exports = {
 						console.log(err);
 					else {
 						var moment = require('moment');
-						var content = data.replace(/\{title\}/g, req.param('title'))
-							.replace(/\{author\}/g, req.param('author'))
-							.replace(/\{desc\}/g, req.param('desc'))
-							.replace(/\{content\}/g, req.param('content'))
-							.replace(/\{date\}/g, moment(new Date()).format('YYYY-MM-DD'));
+                        var article = {
+                            title : req.param('title'),
+                            author: req.param('author'),
+                            cover: req.param('cover'),
+                            desc: req.param('desc'),
+                            content: req.param('content'),
+                            date: moment(new Date()).format('YYYY-MM-DD'),
+                            userId: req.session.user.id
+                        };
+                        var isShowCover = req.param('isShowCover');
+						var content = data.replace(/\{title\}/g, article.title)
+							.replace(/\{author\}/g, article.author)
+                            .replace(/\{cover\}/g, req.baseUrl + article.cover.replace('..', ''))
+							.replace(/\{desc\}/g, article.desc)
+							.replace(/\{content\}/g, isShowCover == 'true' ? ('<img src="' + article.cover + '" width="100%" />' + article.content) : article.content)
+							.replace(/\{date\}/g, article.date);
+                        article.content = content;
 						var htmlFile = moment(new Date()).format('YYYYMMDDHHmmss') + '.html';
 						fs.writeFileSync('./assets/static/' + htmlFile, content);
-						res.send(htmlFile);
+                        article.file = htmlFile;
+                        Article.create(article).exec(function(err, model){
+                            if(err){
+                                console.log('something went wrong!');
+                            }
+                            else {
+                                res.send(htmlFile);
+                            }
+                        });
 					}
 				});
 			}
