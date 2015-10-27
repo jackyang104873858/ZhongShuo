@@ -268,14 +268,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         content: ue.getContent()
       },
       success:function(ret){
-        alert('提交成功，点击确定跳转到生成的文章');
-        location.href = '/static/' + ret;
+        getPage('/static/' + ret);
       },
       error: function(req, status, err) {
             alert(req.responseText);
           }
     });
   }
+
+    function getPage(url) {
+        $.ajax({
+            url: url,
+            type: 'get',
+            success: function(data) {
+                alert('提交成功，点击确定跳转到生成的文章');
+                location.href = url;
+            },
+            error: function(data){
+                getPage(url);
+            }
+        });
+    }
 </script>
 </body>
 </html>

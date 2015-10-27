@@ -151,8 +151,8 @@
             <div id="js_pc_qr_code" class="qr_code_pc_outer" style="display:none;">
                 <div class="qr_code_pc_inner">
                     <div class="qr_code_pc">
-                        <img id="js_pc_qr_code_img" class="qr_code_pc_img">
-                        <p>微信扫一扫<br>关注该公众号</p>
+                        <img id="js_pc_qr_code_img" class="qr_code_pc_img" >
+                        <p>微信扫一扫<br>在手机上阅读</p>
                     </div>
                 </div>
             </div>
@@ -217,6 +217,7 @@
       var pay_timestamp = "";
       var need_pay = "" * 1;
       
+      document.getElementById('js_pc_qr_code_img').src = "http://qr.liantu.com/api.php?text=" + location.href;
   </script>
 
   <script type="text/javascript">
