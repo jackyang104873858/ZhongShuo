@@ -1,0 +1,148 @@
+<div class="col-md-12 graphs">
+  <div class="xs">
+    <h3>我的文章</h3>
+  	<div class="bs-example4" data-example-id="contextual-table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>封面</th>
+          <th>标题</th>
+          <th>作者</th>
+          <th>发布时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="articleList">
+        <tr class="active">
+          <th scope="row">1</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="success">
+          <th scope="row">3</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="info">
+          <th scope="row">5</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="warning">
+          <th scope="row">7</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">8</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="danger">
+          <th scope="row">9</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal fade" id="confirmDel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h2 class="modal-title">提示</h2>
+      </div>
+      <div class="modal-body">
+        <p>确定要删除这篇文章吗？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" onclick="deleteArticle()">删了！</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">还是算了吧</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+var currentPage = 0;
+function getArticles() {
+  $.ajax({
+    url: 'getArticles',
+    data: 'currentPage=' + currentPage,
+    dataType: 'json',
+    cache: false,
+    success: function(ret) {
+      if(ret && ret != 'error') {
+        $('#articleList').html('');
+        if(ret.length == 0) {
+          $('#articleList').html('<td colspan="6"><div class="alert alert-success" role="alert">你还没有写过任何文章哦。<strong><a href="newArticle">快去写第一篇文章吧～</a></strong></div></td>');
+        }
+        else{
+          $(ret).each(function(i,article) {
+            $('<tr '+ (i % 2 == 0 ? 'class="success" ' : '') + '><th scrope="row">' + (currentPage * 10 + i + 1) + '</th><td><img src="' + article.cover + '" style="max-width:180px; max-height:100px;" /></td><td><a href="/static/' + article.file + '" target="_blank">' + article.title + '</a></td><td>' + article.author + '</td><td>' + article.createdAt + '</td><td><p><a class="btn btn-xs btn-warning warning_44" href="modifyArticle?articleId=' + article.id + '">修改</a>&nbsp;<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#confirmDel" onclick="setArticleId(\'' + article.id + '\')">删除</button></p></td>').appendTo('#articleList');
+          });
+        }
+      }
+    }
+  });
+}
+
+var delArticleId ;
+
+function setArticleId(articleId){
+  delArticleId = articleId;
+}
+
+function deleteArticle() {
+  if(delArticleId) {
+    $('.close').click();
+    $.ajax({
+      url: 'delArticle',
+      data: 'articleId=' + delArticleId,
+      dataType: 'json',
+      cache: false,
+      success: function(ret) {
+        if(ret && ret.result == 1) {
+          TINY.box.show({html:'删除成功!',animate:false,close:false,boxid:'error',width:250,closejs:getArticles});
+        }
+      },
+      error: function(a,b,c) {
+        alert(a);
+      }
+    });
+  }
+}
+
+$(document).ready(function(){
+  currentPage = 0;
+  getArticles();
+});
+</script>
+<link rel="stylesheet" type="text/css" href="../styles/tinybox.css">
+<script type="text/javascript" src="../js/tinybox.js"></script>

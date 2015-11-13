@@ -49,9 +49,9 @@ module.exports = {
 };
 
 function formatField(collection) {
-	var moment = require('moment');
 	if(collection.length == 0)
 		return;
+	var moment = require('moment');
 	for(var i = 0; i < collection.length; i++) {
 		var model = collection[i];
 		model.createdAt = moment(model.createdAt).format('YYYY-MM-DD HH:mm:ss');

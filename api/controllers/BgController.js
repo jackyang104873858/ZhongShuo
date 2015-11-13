@@ -99,10 +99,10 @@ module.exports = {
         ] /* 列出的文件类型 */
     },
 	index: function(req, res) {
-		res.render('Bg/index');
+		res.view('Bg/index',{layout:'bg',title:'我的众说'});
 	},
 	newArticle: function(req, res) {
-		res.render('Bg/newArticle');
+		res.view('Bg/newArticle',{layout:'bg',title:'发表新文章',article:null});
 	},
 	ueditor: function(req, res) {
 		var act = req.param('action');
@@ -218,48 +218,160 @@ module.exports = {
     },
 	saveArticle: function(req, res) {
 		var fs = require('fs');
-		var filePath = './assets/templates/wx.html';
-		fs.exists(filePath,function(exists) {
-			if(!exists) {
-  				console.log("Can't find the template file!");
-			}
-			else {
-				fs.readFile(filePath, "utf8", function(err, data) {
-					if(err)
-						console.log(err);
-					else {
-						var moment = require('moment');
-                        var article = {
-                            title : req.param('title'),
-                            author: req.param('author'),
-                            cover: req.param('cover'),
-                            desc: req.param('desc'),
-                            content: req.param('content'),
-                            date: moment(new Date()).format('YYYY-MM-DD'),
-                            userId: req.session.user.id
-                        };
-                        var isShowCover = req.param('isShowCover');
-						var content = data.replace(/\{title\}/g, article.title)
-							.replace(/\{author\}/g, article.author)
-                            .replace(/\{cover\}/g, 'http://www.zhshuo.com' + article.cover.replace('..', ''))
-							.replace(/\{desc\}/g, article.desc)
-							.replace(/\{content\}/g, isShowCover == 'true' ? ('<img src="' + article.cover + '" width="100%" />' + article.content) : article.content)
-							.replace(/\{date\}/g, article.date);
-                        article.content = content;
-						var htmlFile = moment(new Date()).format('YYYYMMDDHHmmss') + '.html';
-						fs.writeFileSync('./assets/static/' + htmlFile, content);
-                        article.file = htmlFile;
-                        Article.create(article).exec(function(err, model){
-                            if(err){
-                                console.log('something went wrong!');
-                            }
-                            else {
-                                res.send(htmlFile);
-                            }
-                        });
-					}
-				});
-			}
-		});
-	}
+        var articleId = req.param('id');
+        if(articleId) {
+            Article.findOne({id: articleId}).exec(function(err, article) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    var filePath = './assets/templates/wx.html';
+                    fs.exists(filePath, function(exists) {
+                        if(!exists) {
+                            console.log("Can't find the static file!");
+                            res.send("Can't find the static file!");
+                        }
+                        else {
+                            fs.readFile(filePath, 'utf8', function(err, data) {
+                                if(err) {
+                                    console.log(err);
+                                    res.send('error');
+                                }
+                                else {
+                                    var moment = require('moment');
+                                    var isShowCover = req.param('isShowCover');
+                                    var content = data.replace(/\{title\}/g, req.param('title'))
+                                        .replace(/\{author\}/g, req.param('author'))
+                                        .replace(/\{cover\}/g, 'http://www.zhshuo.com' + req.param('cover').replace('..', ''))
+                                        .replace(/\{desc\}/g, req.param('desc'))
+                                        .replace(/\{content\}/g, isShowCover == 'true' ? ('<img src="' + req.param('cover') + 
+                                            '" width="100%" />' + req.param('content')) : req.param('content'))
+                                        .replace(/\{date\}/g, moment(article.date).format('YYYY-MM-DD'));
+                                    var htmlFile = moment(new Date()).format('YYYYMMDDHHmmss') + '.html';
+                                    fs.writeFileSync('./assets/static/' + htmlFile, content);
+                                    article.file = htmlFile;
+                                    Article.update({id: articleId}, {
+                                        title : req.param('title'),
+                                        author: req.param('author'),
+                                        cover: req.param('cover'),
+                                        desc: req.param('desc'),
+                                        content: req.param('content')
+                                    }).exec(function(err, model) {
+                                        if(err) {
+                                            console.log(err);
+                                            res.send('error');
+                                        }
+                                        else {
+                                            res.send(htmlFile);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        else {
+    		var filePath = './assets/templates/wx.html';
+    		fs.exists(filePath,function(exists) {
+    			if(!exists) {
+      				console.log("Can't find the template file!");
+                    res.send("Can't find the template file!");
+    			}
+    			else {
+    				fs.readFile(filePath, "utf8", function(err, data) {
+    					if(err)
+    						console.log(err);
+    					else {
+    						var moment = require('moment');
+                            var article = {
+                                title : req.param('title'),
+                                author: req.param('author'),
+                                cover: req.param('cover'),
+                                desc: req.param('desc'),
+                                content: req.param('content'),
+                                date: moment(new Date()).format('YYYY-MM-DD'),
+                                userId: req.session.user.id
+                            };
+                            var isShowCover = req.param('isShowCover');
+    						var content = data.replace(/\{title\}/g, article.title)
+    							.replace(/\{author\}/g, article.author)
+                                .replace(/\{cover\}/g, 'http://www.zhshuo.com' + article.cover.replace('..', ''))
+    							.replace(/\{desc\}/g, article.desc)
+    							.replace(/\{content\}/g, isShowCover == 'true' ? ('<img src="' + article.cover + '" width="100%" />' + article.content) : article.content)
+    							.replace(/\{date\}/g, article.date);
+                            
+    						var htmlFile = moment(new Date()).format('YYYYMMDDHHmmss') + '.html';
+    						fs.writeFileSync('./assets/static/' + htmlFile, content);
+                            article.file = htmlFile;
+                            Article.create(article).exec(function(err, model){
+                                if(err){
+                                    console.log(err);
+                                    res.send('error');
+                                }
+                                else {
+                                    res.send(htmlFile);
+                                }
+                            });
+    					}
+    				});
+    			}
+    		});
+        }
+	},
+    myArticles: function(req, res) {
+        res.view('Bg/myArticles',{layout:'bg',title:'我的文章'});
+    },
+    getArticles:function(req, res) {
+        var currentPage = req.param('currentPage');
+        Article.find({
+            where: {userId: req.session.user.id},
+            sort: 'createdAt DESC',
+            limit: 10,
+            skip: currentPage * 10
+        }).exec(function(err, list) {
+            if(err) {
+                console.log(err);
+                res.send('error')
+            }
+            else {
+                if(list.length > 0) {
+                    var moment = require('moment');
+                    for(var i = 0; i < list.length; i++) {
+                        var model = list[i];
+                        model.createdAt = moment(model.createdAt).format('YYYY-MM-DD HH:mm');
+                    }
+                }
+                res.send(list);
+            }
+        });
+    },
+    modifyArticle: function(req, res) {
+        var articleId = req.param('articleId');
+        if(!articleId) {
+            res.redirect('myArticles');
+        }
+        Article.findOne({id: articleId}).exec(function(err, article){
+            if(err) {
+                console.log(err);
+                res.send('error');
+            }
+            else {
+                res.view('Bg/newArticle',{layout:'bg',title:'修改文章', article: article});
+            }
+        });   
+    },
+    delArticle: function(req, res) {
+        var articleId = req.param('articleId');
+        Article.destroy({id: articleId}).exec(function(err, model) {
+            if(err) {
+                console.log(err);
+                res.send('error');
+            }
+            else {
+                res.send({result: 1});
+            }
+        });
+    }
 };
