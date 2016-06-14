@@ -370,7 +370,88 @@ module.exports = {
                 res.send('error');
             }
             else {
+                var fs = require('fs');
+                fs.unlinkSync('./assets/static/' + model.file);
                 res.send({result: 1});
+            }
+        });
+    },
+        newComment: function(req, res) {
+        res.view('Comment/newComment', {layout:'bg', title: '新建评论对象', commentObj: null});
+    },
+    myComment: function(req, res) {
+        res.view('Comment/myComment', { layout: 'bg', title: '评论对象列表'});
+    },
+    saveCommentTarget: function(req, res) {
+        var moment = require('moment');
+        var commentObj = {
+            title: req.param('title'),
+            date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+            type: req.param('type'),
+            displayType: req.param('displayType'),
+            commentsNum: 0,
+            userId: req.session.user.id
+        };
+        CommentTarget.create(commentObj).exec(function(err, model) {
+            if(err) {
+                console.log(err);
+                res.send({ Result: 0, Reason: err});
+            }
+            else {
+                res.send({ Result: 1, id: model.id});
+            }
+        });
+    },
+    getCommentObjs: function(req, res) {
+        var currentPage = req.param('currentPage');
+        CommentTarget.find({
+            where: {userId: req.session.user.id},
+            sort: 'createdAt DESC',
+            limit: 10,
+            skip: currentPage * 10
+        }).exec(function(err, list) {
+            if(err) {
+                console.log(err);
+                res.send(err);
+            }
+            else {
+                    if(list.length > 0) {
+                    var moment = require('moment');
+                    for(var i = 0; i < list.length; i++) {
+                        var model = list[i];
+                        model.createdAt = moment(model.createdAt).format('YYYY-MM-DD HH:mm');
+                    }
+                }
+                res.send(list);
+            }
+        });
+    },
+    delCommentObjs: function(req, res) {
+        var commentObjIds = req.param('commentObjIds');
+        CommentTarget.destroy({id: commentObjIds.split(',')}).exec(function(err,model) {
+            if(err) {
+                console.log(err);
+                res.send('error');
+            }
+            else {
+                res.send({Result: 1});
+            }
+        });
+    },
+    detail: function(req, res) {
+        var commentObjId = req.param('commentObjId');
+        CommentTarget.findOne({
+            where: {'id': commentObjId}
+        }).exec(function(err, model) {
+            if(err) {
+                console.log(err);
+                res.send('error');
+            }
+            else if(model == null) {
+                res.send('error');
+            }
+            else {
+                res.view('Comment/detail',{layout:'bg', title: model.title, commentObj: model});
             }
         });
     }

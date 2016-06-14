@@ -132,7 +132,7 @@ function getPage(url) {
         success: function(data) {
             $('html, body').animate({scrollTop:0}, 'slow');
             $('#btnOK').removeClass('btn-danger').addClass('btn-info').attr("disabled",false).html('span class="glyphicon glyphicon-envelope tag_02"></span> 确定提交 '); 
-            TINY.box.show({html:'提交成功，<a href="'+url+'">点击此处</a>查看文章!',animate:false,close:false,boxid:'error',width:250});
+            TINY.box.show({html:'提交成功，<a href="'+url+'" target="_blank">点击此处</a>查看文章!',animate:false,close:false,boxid:'error',width:250});
         },
         error: function(data){
             getPage(url);

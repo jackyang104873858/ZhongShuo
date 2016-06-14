@@ -30,6 +30,7 @@
     } 
   });
 </script>
+<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101322611" data-redirecturi="http://www.zhshuo.com/qqlogin.html" charset="utf-8"></script>
 </head>
 <body id="login">
   <div class="login-logo">
@@ -38,16 +39,16 @@
   <h2 class="form-heading">登录</h2>
   <div class="app-cam">
 	  <form action="User/login" method="POST">
-  		<input type="text" class="text" value="邮箱／手机号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱／手机号';}" name="account">
-  		<input type="password" value="输入密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '输入密码';}" name="password">
+  		<input type="text" class="text" value="邮箱／手机号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱／手机号';}" name="account" />
+  		<input type="password" name="password" placeholder="请输入密码" />
   		<div class="submit"><input type="submit" onclick="myFunction()" value="登录"></div>
   		<div class="login-social-link">
-            <a href="index.html" class="facebook">
-                QQ登录
-            </a>
-            <a href="index.html" class="twitter">
-                微信登录
-            </a>
+            <span id="qqLoginBtn"></span>
+            <script type="text/javascript">
+                QC.Login({
+                   btnId:"qqLoginBtn"    //插入按钮的节点id
+            });
+            </script>
           </div>
   		<ul class="new">
   			<li class="new_left"><p><a href="#">忘记密码?</a></p></li>

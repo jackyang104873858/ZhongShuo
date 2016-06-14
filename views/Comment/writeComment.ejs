@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<script type="text/javascript">
+    String.prototype.html = function(encode) {
+        var replace =["&#39;", "'", "&quot;", '"', "&nbsp;", " ", "&gt;", ">", "&lt;", "<", "&amp;", "&", "&yen;", "¥"];
+        if (encode) {
+            replace.reverse();
+        }
+        for (var i=0,str=this;i< replace.length;i+= 2) {
+             str=str.replace(new RegExp(replace[i],'g'),replace[i+1]);
+        }
+        return str;
+    };
+
+    window.isInWeixinApp = function() {
+        return /MicroMessenger/.test(navigator.userAgent);
+    };
+
+</script>
+
+        <title><%= commentObj.title %></title>
+        
+<link rel="stylesheet" type="text/css" href="/styles/comment/page_mp_article_improve2d1390.css">
+<style>
+     
+    </style>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/styles/comment/page_mp_article_improve_pc2c9cd6.css">
+<![endif]-->
+
+    </head>
+    <body id="activity-detail" class="zh_CN sougou_body" ontouchstart="">
+    <div id="js_cmt_mine" class="discuss_container editing access" >
+        <div class="discuss_container_inner">
+            <h2 class="rich_media_title"><%= commentObj.title %></h2>
+            <span id="log"></span>
+            <div class="frm_textarea_box_wrp">
+                <span class="frm_textarea_box">
+                    <textarea id="js_cmt_input" class="frm_textarea" placeholder="本留言功能由众说网提供。"></textarea>
+                    <div class="emotion_tool">
+                        <span class="emotion_switch" style="display:none;"></span>
+                        <span id="js_emotion_switch" class="pic_emotion_switch_wrp">
+                            <img class="pic_default" src="/images/comment/icon_emotion_switch.2x278965.png" alt="">
+                            <img class="pic_active" src="/images/comment/icon_emotion_switch_active.2x278965.png" alt="">
+                        </span>
+                        <div class="emotion_panel" id="js_emotion_panel">
+                            <span class="emotion_panel_arrow_wrp" id="js_emotion_panel_arrow_wrp">
+                                <i class="emotion_panel_arrow arrow_out"></i>
+                                <i class="emotion_panel_arrow arrow_in"></i>
+                            </span>
+                            <div class="emotion_list_wrp" id="js_slide_wrapper">
+                                
+                                
+                            </div>
+                            <ul class="emotion_navs" id="js_navbar">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="discuss_btn_wrp"><a id="js_cmt_submit" class="btn btn_primary btn_discuss btn_disabled" href="javascript:submitMsg();">提交</a></div>
+        </div>
+    </div>
+
+    <div id="js_article" class="rich_media">
+        
+        <div id="js_top_ad_area" class="top_banner">
+ 
+        </div>
+                
+
+        <div class="rich_media_inner">
+            <div id="page-content">
+                <div id="img-content" class="rich_media_area_primary">
+                    <div class="rich_media_content " id="js_content">  
+                    </div>
+                    <link rel="stylesheet" type="text/css" href="/styles/comment/page_mp_article_improve_combo2e4987.css">
+                </div> 
+            </div>
+        </div>
+    </div>
+        <script>window.moon_map = {
+            "appmsg/emotion/caret.js":"caret.js",
+            "appmsg/emotion/map.js":"map.js",
+            "appmsg/emotion/textarea.js":"textarea.js",
+            "appmsg/emotion/nav.js":"nav.js",
+            "appmsg/emotion/common.js":"common.js",
+            "appmsg/emotion/slide.js":"slide.js",
+            "appmsg/emotion/dom.js":"dom.js",
+            "a/ios.js":"ios.js",
+            "a/android.js":"android.js",
+            "biz_wap/utils/position.js":"position.js",
+            "appmsg/emotion/emotion.js":"emotion.js",
+            "appmsg/comment.js":"comment.js",
+            "sougou/index.js":"sougou.js",
+            "appmsg/outer_link.js":"outerlink.js",
+            "biz_wap/jsapi/core.js":"core.js",
+            "biz_common/dom/event.js":"event.js",
+            "biz_common/log/jserr.js":"jserr.js",
+            "biz_wap/utils/mmversion.js":"mmversion.js",
+            "biz_wap/utils/device.js":"device.js",
+            "biz_wap/jsapi/a8key.js":"a8key.js",
+            "appmsg/index.js":"index.js"
+        };
+        </script>
+        <script type="text/javascript" src="/js/comment/moon.js"></script>
+
+
+  <script type="text/javascript">
+            window.isSg=true;
+          seajs.use('appmsg/index.js');
+
+          function submitMsg(){
+            var btn = document.getElementById('js_cmt_submit');
+            var css = btn.getAttribute('class');
+            if(css.indexOf('btn_disabled') > -1) {
+                return;
+            }
+            alert(document.getElementById('js_cmt_input').value);
+          }
+
+          function isTextareaEmpty() {
+            var ta = document.getElementById('js_cmt_input');
+            var btn = document.getElementById('js_cmt_submit');
+            var css = btn.getAttribute('class');
+            if(ta.value == '') {
+                if(css.indexOf('btn_disabled') < 0) {
+                    btn.setAttribute('class', css + ' btn_disabled');
+                }
+            }
+            else if(css.indexOf('btn_disabled') > -1) {
+                btn.setAttribute('class', css.replace('btn_disabled',''));
+            }
+          }
+
+          var timer = setInterval(isTextareaEmpty, 500);
+  </script>
+
+    </body>
+</html>
+
+ 

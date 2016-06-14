@@ -3,7 +3,7 @@
 <head> 
 <meta charset="utf-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> 
-<title>测试页</title> 
+<title><%= commentObj.title %></title> 
 <style> 
 	* {
 		margin: 0;
@@ -163,7 +163,6 @@
 	}
 </style> 
 </head> 
- 
 <body> 
 	<div class="rich_media">
 		<div class="rich_media_inner">
@@ -171,9 +170,9 @@
 				<div class="rich_media_extra">
 					<div class="discuss_container" style="display:block;">
 						<div class="rich_tips with_line title_tips discuss_title_line">
-							<span class="tips">精选留言</span>
+							<span class="tips"><%= commentObj.displayType == '自动显示' ? '精彩留言' : '筛选留言' %></span>
 						</div>
-						<ul class="discuss_list">
+						<ul class="discuss_list" id="commentList">
 							<li class="discuss_item">
 								<div class="discuss_opr">
 									<span class="media_tool_meta tips_global meta_praise js_comment_praise">
@@ -219,4 +218,33 @@
 		</div>
 	</div>
 </body> 
+<script src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+var currentPage = 0;
+function getComments() {
+	$.ajax({
+		url: 'getComments',
+		data: 'commentObjId=<%= commentObj.id %>&currentPage=' + currentPage,
+		cache: false,
+		success: function(ret) {
+			$('#commentList').html('');
+			if(ret && ret.length > 0) {
+				$(ret).each(function(i, comment) {
+					$('<li class="discuss_item"><div class="discuss_opr"><span class="media_tool_meta tips_global meta_praise js_comment_praise"><i class="icon_praise_gray"></i><span class="praise_num">' + comment.praiseNum + '</span></span></div><div class="user_info"><strong class="nick_name">' + comment.user + '</strong><img src="' + comment.avatar + '" /></div><div class="discuss_message"><span class="discuss_status"></span><div class="discuss_message_content">' + comment.content + '</div></div><p class="discuss_extra_info">' + comment.createdAt + '</p></li>').appendTo('#commentList');
+				});
+			}
+			else {
+				$('<li class="dicuss_item"><div class="discuss_message_content">还没有任何留言哦～<a href="writeComment?commentObjId=<%= commentObj.id %>">马上去发表留言！</a></div></li>').appendTo('#commentList');
+			}
+		},
+		error: function(req, status, err) {
+            alert(req.responseText);
+        }
+	});
+}
+$(function(){
+	currentPage = 0;
+	getComments();
+});
+</script>
 </html>
