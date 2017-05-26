@@ -12,8 +12,8 @@ module.exports = {
   	title: 'string',
   	author: 'string',
   	price: 'string',
-  	intro: 'string',
-  	imgSrc: 'string'
+  	author_intro: 'string',
+  	image: 'string'
   }
 };
 
