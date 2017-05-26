@@ -64,9 +64,9 @@ module.exports = {
 		if(msg == '') {
 			res.send('错误：内容不能为空！');
 		}
-		else {
-
-		}
+		var comment = {
+			
+		};
 	}
 };
 
