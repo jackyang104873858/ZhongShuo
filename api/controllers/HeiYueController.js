@@ -34,6 +34,11 @@ module.exports = {
 			}
 		});
 	},
+	getBooks: function(req, res) {
+		Book.find().exec(function(list){
+			res.send(list);
+		});
+	},
 	addBook:function(req, res){
 		var book = {
 			isbn: req.param('isbn'),
