@@ -25,7 +25,7 @@ module.exports = {
 		});
 	},
 	getBooks: function(req, res) {
-		Book.find().exec(function(list){
+		Book.find({}).exec(function(list){
 			console.log(list);
 			res.send(list);
 		});
