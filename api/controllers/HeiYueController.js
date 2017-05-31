@@ -33,6 +33,25 @@ module.exports = {
 				});
 			}
 		});
+	},
+	addBook:function(req, res){
+		var book = {
+			isbn: req.param('isbn'),
+			title: req.param('title'),
+			author: req.param('author'),
+			price : req.param('price'),
+			author_intro: req.param('author_intro'),
+			image: req.param('image')
+		};
+		Book.create(book).exec(function(err, b){
+			if(err) {
+				console.log(err);
+				res.send(err);
+			}
+			else{
+				res.send(b);
+			}
+		});
 	}
 };
 
