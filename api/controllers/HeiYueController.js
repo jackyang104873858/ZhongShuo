@@ -20,12 +20,13 @@ module.exports = {
 				res.send(model);
 			}
 			else {
-					res.send({result: 'noBook'});
+				res.send({result: 'noBook'});
 			}
 		});
 	},
 	getBooks: function(req, res) {
 		Book.find().exec(function(list){
+			console.log(list);
 			res.send(list);
 		});
 	},
@@ -38,12 +39,14 @@ module.exports = {
 			author_intro: req.param('author_intro'),
 			image: req.param('image')
 		};
+		console.log(book);
 		Book.create(book).exec(function(err, b){
 			if(err) {
 				console.log(err);
 				res.send(err);
 			}
 			else{
+				console.log(b);
 				res.send(b);
 			}
 		});
