@@ -8,6 +8,7 @@
 module.exports = {
 	getBook:function(req, res) {
 		var isbn = req.param('isbn');
+		console.log(isbn);
 		Book.findOne({
 			where: {isbn: isbn}
 		}).exec(function(err, model) {
@@ -19,18 +20,7 @@ module.exports = {
 				res.send(model);
 			}
 			else {
-				Book.findOne({where: {isbn: isbn}}).exec(function(err, book){
-					if(err){
-						console.log(err);
-						res.send(err)
-					}
-					else if(book){
-						res.send(book);
-					}
-					else {
-						res.send({result: 'noBook'});
-					}
-				});
+					res.send({result: 'noBook'});
 			}
 		});
 	},
