@@ -9,7 +9,6 @@ module.exports = {
 
   attributes: {
   	openid : 'string',
-  	regDate : 'datetime',
   	lastLogin : 'datetime',
   	children: { collection: 'Child'},
   	books: { collection: 'Book'}

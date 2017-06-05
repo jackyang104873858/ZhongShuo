@@ -8,12 +8,10 @@
 module.exports = {
 	getBook:function(req, res) {
 		var isbn = req.param('isbn');
-		console.log(isbn);
 		Book.findOne({
 			where: {isbn: isbn}
 		}).exec(function(err, model) {
 			if(err) {
-				console.log(err);
 				res.send(err);
 			}
 			else if(model) {
@@ -26,7 +24,6 @@ module.exports = {
 	},
 	getBooks: function(req, res) {
 		Book.find({}).exec(function(err, list){
-			console.log(list);
 			res.send(list);
 		});
 	},
@@ -42,12 +39,38 @@ module.exports = {
 		console.log(book);
 		Book.create(book).exec(function(err, b){
 			if(err) {
-				console.log(err);
 				res.send(err);
 			}
 			else{
-				console.log(b);
 				res.send(b);
+			}
+		});
+	},
+	getHYUser: function(req, res) {
+		var openid = req.param('openid');
+		if(!openid) {
+			res.send({result: 'error: no openid!'})
+		}
+		HYUser.findOne({where: {openid: openid}}).exec(function(err, user){
+			if(err){
+				res.send(err);
+			}
+			else{
+				res.send(user);
+			}
+		});
+	},
+	addHYUser: function(req, res) {
+		var user = {
+			openid: req.param('openid'),
+			children: req.param('children')
+		};
+		HYUser.create(user).exec(function(err, u){
+			if(err){
+				res.send(err);
+			}
+			else{
+				res.send(u);
 			}
 		});
 	}
