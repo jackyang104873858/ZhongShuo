@@ -9,7 +9,8 @@ module.exports = {
 
   attributes: {
   	name: 'string',
-  	birthdate: 'datetime'
+  	birthdate: 'datetime',
+  	image: 'string'
   }
 };
 
