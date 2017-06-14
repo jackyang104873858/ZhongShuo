@@ -86,7 +86,7 @@ module.exports = {
 			res.send({result: 'error: no openid!'});
 		}
 		else {
-			HYUser.findOne(where: {openid: openid}).exec(function(err, u){
+			HYUser.findOne({where: {openid: openid}}).exec(function(err, u){
 				if(err){
 					res.send(err);
 				}
@@ -148,7 +148,7 @@ module.exports = {
             }
             that.writeResult(res, 'SUCCESS', path.basename(file.fd), uploadFileName);
         });
-	}
+	},
 	writeResult: function(res, state, url, fileName) {
         res.send({
             state : state,
