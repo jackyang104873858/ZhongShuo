@@ -126,6 +126,7 @@ module.exports = {
 		}
 	},
 	uploadImage: function(req, res) {
+		var path = require('path');
 		var that = this;
         req.file(this.config.fileFieldName).upload({
             maxBytes: that.config.fileMaxSize,
