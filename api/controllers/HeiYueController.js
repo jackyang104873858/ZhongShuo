@@ -86,7 +86,7 @@ module.exports = {
 			res.send({result: 'error: no openid!'});
 		}
 		else {
-			HYUser.findOne({where: {openid: openid}}).exec(function(err, u){
+			HYUser.findOne({where: {openid: user.openid}}).exec(function(err, u){
 				if(err){
 					res.send(err);
 				}
