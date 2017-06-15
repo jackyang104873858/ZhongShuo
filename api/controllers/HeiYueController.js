@@ -107,7 +107,7 @@ module.exports = {
 				}
 				else {
 					HYUser.create({
-						openid: openid,
+						openid: user.openid,
 						children: [{
 							name: user.name,
 							image: user.image,
