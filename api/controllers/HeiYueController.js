@@ -166,6 +166,39 @@ module.exports = {
     },
     checkFileSize: function(size, maxSize) {
         return size < maxSize;
+    },
+    addReadRecord: function(req, res) {
+    	var isbn = req.param('isbn');
+    	var childId = req.param('childId');
+    	var feedback = req.param('feedback');
+    	var thoughts = req.param('thoughts');
+    	Child.findOne({where: {id: childId}}).populate('readRecords').exec(function(error,child){
+    		if(error) {
+    			res.send(error);
+    		}
+    		else {
+    			Book.findOne({where: {isbn: isbn}}).exec(function(err,book){
+	    			if(err){
+	    				res.send(err);
+	    			}
+	    			else {
+	    				child.readRecords.push({
+		    				book: book,
+		    				feedback: feedback,
+		    				thoughts: thoughts
+		    			});
+		    			Child.update({id: childId}, child).exec(function(e, model) {
+		    				if(e) {
+		    					res.send(e);
+		    				}
+		    				else {
+		    					res.send(model);
+		    				}
+		    			});
+	    			}
+	    		});
+    		}
+    	});
     }
 };
 

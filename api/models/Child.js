@@ -10,7 +10,8 @@ module.exports = {
   attributes: {
   	name: 'string',
   	birthdate: 'datetime',
-  	image: 'string'
+  	image: 'string',
+  	readRecords: { collection: 'readrecord'}
   }
 };
 
