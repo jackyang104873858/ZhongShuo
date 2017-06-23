@@ -8,7 +8,8 @@
 module.exports = {
 
   attributes: {
-  	book: { model: 'book'},
+  	childId: 'string',
+  	isbn: 'string',
   	feedback: 'string',
   	thoughts: 'string'
   }

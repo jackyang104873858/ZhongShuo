@@ -86,7 +86,7 @@ module.exports = {
 			res.send({result: 'error: no openid!'});
 		}
 		else {
-			HYUser.findOne({where: {openid: user.openid}}).populate('children').populate('child.readRecords').exec(function(err, u){
+			HYUser.findOne({where: {openid: user.openid}}).populate('children').exec(function(err, u){
 				if(err){
 					res.send(err);
 				}
@@ -172,31 +172,17 @@ module.exports = {
     	var childId = req.param('childId');
     	var feedback = req.param('feedback');
     	var thoughts = req.param('thoughts');
-    	Child.findOne({where: {id: childId}}).populate('readRecords').exec(function(error,child){
-    		if(error) {
-    			res.send(error);
+    	ReadRecord.create({
+    		isbn: isbn,
+    		childId: childId,
+    		feedback: feedback,
+    		thoughts: thoughts
+    	}).exec(function(err, model) {
+    		if(err) {
+    			res.send(err);
     		}
     		else {
-    			Book.findOne({where: {isbn: isbn}}).exec(function(err,book){
-	    			if(err){
-	    				res.send(err);
-	    			}
-	    			else {
-	    				child.readRecords.push({
-		    				book: book,
-		    				feedback: feedback,
-		    				thoughts: thoughts
-		    			});
-		    			Child.update({id: childId}, child).exec(function(e, model) {
-		    				if(e) {
-		    					res.send(e);
-		    				}
-		    				else {
-		    					res.send(model);
-		    				}
-		    			});
-	    			}
-	    		});
+    			res.send(model);
     		}
     	});
     }
