@@ -96,7 +96,7 @@ module.exports = {
 						image: user.image,
 						birthdate: user.birthdate
 					});
-					HYUser.update({openid: opeind}, u).exec(function(error,model){
+					HYUser.update({openid: user.opeind}, u).exec(function(error,model){
 						if(error) {
 							res.send(error);
 						}
