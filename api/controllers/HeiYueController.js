@@ -73,20 +73,19 @@ module.exports = {
 			else{
 				if(user.children.length > 0) {
 					for(var i = 0; i < user.children.length; i++) {
-						var child = user.children[i];
-						child.readRecords = [];
-						ReadRecord.find({where: {childId: child.id}}).exec(function(e, record){
+						user.children[i].readRecords = [];
+						ReadRecord.find({where: {childId: user.children[i].id}}).exec(function(e, record){
 							if(e) {
 								console.log(e)
 							}
 							else {
 								for(var j = 0; j < record.length; j++) {
 									console.log(record[j]);
-									child.readRecords.push(record[j]);
-									console.log(child.readRecords);
+									user.children[i].readRecords.push(record[j]);
+									console.log(user.children[i].readRecords);
 								}
 							}
-							console.log(child);
+							console.log(user.children[i]);
 							if(i == user.children.length - 1) {
 								console.log(user);
 								res.send(user);
