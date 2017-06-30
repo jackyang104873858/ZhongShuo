@@ -71,24 +71,20 @@ module.exports = {
 				res.send(err);
 			}
 			else{
-				console.log(user.children);
 				if(user.children.length > 0) {
 					for(var i = 0; i < user.children.length; i++) {
 						var child = user.children[i];
-						console.log(i);
 						ReadRecord.find({where: {childId: child.id}}).exec(function(e, record){
 							if(e) {
 								console.log(e)
 							}
 							else {
-								console.log(record);
 								child.readRecords = record;
-							}
-							if(i == user.children.length - 1){
-								res.send(user);
 							}
 						});
 					}
+					console.log(user);
+					res.send(user);
 				}
 				else
 					res.send(user);
