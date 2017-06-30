@@ -75,7 +75,13 @@ module.exports = {
 				if(user.children.length > 0) {
 					for(var child in user.children) {
 						ReadRecord.find({where: {childId: child.id}}).exec(function(e, record){
-							child.readRecords = record;
+							if(e) {
+								console.log(e)
+							}
+							else {
+								console.log(record);
+								child.readRecords = record;
+							}
 						});
 					}
 				}
