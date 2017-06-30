@@ -81,10 +81,12 @@ module.exports = {
 							else {
 								child.readRecords = record;
 							}
+							if(i == user.children.length - 1) {
+								console.log(user);
+								res.send(user);
+							}
 						});
 					}
-					console.log(user);
-					res.send(user);
 				}
 				else
 					res.send(user);
