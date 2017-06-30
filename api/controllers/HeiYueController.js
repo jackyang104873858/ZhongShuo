@@ -71,6 +71,13 @@ module.exports = {
 				res.send(err);
 			}
 			else{
+				if(user.children.length > 0) {
+					for(var child in user.children) {
+						ReadRecord.find({where: {childId: child.id}}).exec(function(e, record){
+							child.readRecords = record;
+						});
+					}
+				}
 				res.send(user);
 			}
 		});
