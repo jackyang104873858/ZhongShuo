@@ -71,6 +71,7 @@ module.exports = {
 				res.send(err);
 			}
 			else{
+				console.log(user.children);
 				if(user.children.length > 0) {
 					for(var child in user.children) {
 						ReadRecord.find({where: {childId: child.id}}).exec(function(e, record){
