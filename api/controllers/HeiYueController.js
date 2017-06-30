@@ -80,9 +80,10 @@ module.exports = {
 								console.log(e)
 							}
 							else {
-								for(var r in record) {
-									console.log(r);
-									child.readRecords.push(r);
+								for(var j = 0; j < record.length; j++) {
+									console.log(recrod[j]);
+									child.readRecords.push(record[j]);
+									console.log(child.readRecords);
 								}
 							}
 							console.log(child);
