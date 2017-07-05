@@ -68,7 +68,7 @@ module.exports = {
 			res.send({result: 'error: no openid!'})
 		}
 		HYUser.findOne({where: {openid: openid}}).populate('children').then(function(user) {
-			console.log(user);
+			console.log(_);
 			var readRecords = ReadRecord.find({id: _.pluck(user.children, 'readrecord')}).then(function(readRecords){
 				return readRecords;
 			});
