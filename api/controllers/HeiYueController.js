@@ -73,10 +73,10 @@ module.exports = {
 			});
 			return [user, readRecords];
 		}).spread(function(user, readRecords){
-			readRecords = _.keyBy(readRecords, 'id');
+			readRecords = _.keyBy(readRecords, 'childId');
 			console.log(readRecords);
 			user.children = _.map(user.children, function(child) {
-				child.readRecord = readRecords[child.readRecord];
+				child.readRecord = readRecords[child.id];
 				return child;
 			});
 			res.json(user);
