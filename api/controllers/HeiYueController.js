@@ -75,7 +75,7 @@ module.exports = {
 		}).spread(function(user, readRecords){
 			//readRecords = _.keyBy(readRecords, 'childId');
 			user.children = _.map(user.children, function(child) {
-				child.readRecords = _.filter(readRecords, function(r) {
+				child.readRecord = _.filter(readRecords, function(r) {
 					return r.childId == child.id;
 				});
 				return child;
