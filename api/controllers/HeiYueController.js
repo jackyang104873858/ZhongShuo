@@ -66,7 +66,7 @@ module.exports = {
 		if(!openid) {
 			res.send({result: 'error: no openid!'})
 		}
-		HYUser.findOne({where: {openid: openid}}).populate('children').exec(function(err, user){
+		HYUser.findOne({where: {openid: openid}}).populate('children').then(function(err, user){
 			if(err){
 				res.send(err);
 			}
