@@ -73,9 +73,8 @@ module.exports = {
 			});
 			return [user, readRecords];
 		}).spread(function(user, readRecords){
-			console.log(user);
-			console.log(readRecords);
 			readRecords = _.keyBy(readRecords, 'id');
+			console.log(readRecords);
 			user.children = _.map(user.children, function(child) {
 				child.readRecord = readRecords[child.readRecord];
 				return child;
