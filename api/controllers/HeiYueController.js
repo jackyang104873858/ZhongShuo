@@ -70,9 +70,9 @@ module.exports = {
 		HYUser.findOne({where: {openid: openid}}).populate('children').then(function(user) {
 			console.log(user);
 			var readRecords = ReadRecord.find({childId: _.map(user.children, 'id')}).then(function(readRecords){
+				console.log(readRecords);
 				return readRecords;
 			});
-			console.log(readRecords);
 			return [user, readRecords];
 		}).spread(function(user, readRecords){
 			readRecords = _.keyBy(readRecords, 'id');
