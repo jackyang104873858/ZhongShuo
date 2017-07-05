@@ -73,10 +73,11 @@ module.exports = {
 			});
 			return [user, readRecords];
 		}).spread(function(user, readRecords){
-			readRecords = _.keyBy(readRecords, 'childId');
-			console.log(readRecords);
+			//readRecords = _.keyBy(readRecords, 'childId');
 			user.children = _.map(user.children, function(child) {
-				child.readRecord = readRecords[child.id];
+				child.readRecord = _.filter(readRecords, function(r) {
+					return r.childId == child.id;
+				});
 				return child;
 			});
 			res.json(user);
