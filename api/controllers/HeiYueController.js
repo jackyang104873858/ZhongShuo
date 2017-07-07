@@ -97,6 +97,7 @@ module.exports = {
 		})
 	},
 	addHYUser: function(req, res) {
+		var that = this;
 		var user = {
 			openid: req.param('openid'),
 			name: req.param('name'),
@@ -122,7 +123,8 @@ module.exports = {
 							res.send(error);
 						}
 						else {
-							res.send(model);
+							//res.send(model);
+							that.getHYUser(req, res);
 						}
 					});
 				}
@@ -139,7 +141,8 @@ module.exports = {
 							res.send(error);
 						}
 						else {
-							res.send(model);
+							//res.send(model);
+							that.getHYUser(req, res);
 						}
 					});
 				}
