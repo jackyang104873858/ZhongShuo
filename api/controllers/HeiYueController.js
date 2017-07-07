@@ -80,15 +80,17 @@ module.exports = {
 				}
 			}
 			else {
-				res.json({});
+				return [{}, []];
 			}
 		}).spread(function(user, readRecords){
-			user.children = _.map(user.children, function(child) {
-				child.readRecord = _.filter(readRecords, function(r) {
-					return r.childId == child.id;
+			if(user.children) {
+				user.children = _.map(user.children, function(child) {
+					child.readRecord = _.filter(readRecords, function(r) {
+						return r.childId == child.id;
+					});
+					return child;
 				});
-				return child;
-			});
+			}
 			res.json(user);
 		}).catch(function(err){
 			return res.serverError(err);
