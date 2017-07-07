@@ -68,12 +68,16 @@ module.exports = {
 			res.send({result: 'error: no openid!'})
 		}
 		HYUser.findOne({where: {openid: openid}}).populate('children').then(function(user) {
-			var readRecords = ReadRecord.find({childId: _.map(user.children, 'id')}).then(function(readRecords){
-				return readRecords;
-			});
-			return [user, readRecords];
+			if(user.children.length > 0) {
+				var readRecords = ReadRecord.find({childId: _.map(user.children, 'id')}).then(function(readRecords){
+					return readRecords;
+				});
+				return [user, readRecords];
+			}
+			else {
+				return [user, []];
+			}
 		}).spread(function(user, readRecords){
-			//readRecords = _.keyBy(readRecords, 'childId');
 			user.children = _.map(user.children, function(child) {
 				child.readRecord = _.filter(readRecords, function(r) {
 					return r.childId == child.id;
@@ -84,37 +88,6 @@ module.exports = {
 		}).catch(function(err){
 			return res.serverError(err);
 		})
-		// HYUser.findOne({where: {openid: openid}}).populate('children').then(function(err, user){
-		// 	if(err){
-		// 		res.send(err);
-		// 	}
-		// 	else{
-		// 		if(user.children.length > 0) {
-		// 			for(var i = 0; i < user.children.length; i++) {
-		// 				user.children[i].readRecords = [];
-		// 				ReadRecord.find({where: {childId: user.children[i].id}}).exec(function(e, record){
-		// 					if(e) {
-		// 						console.log(e)
-		// 					}
-		// 					else {
-		// 						for(var j = 0; j < record.length; j++) {
-		// 							console.log(record[j]);
-		// 							user.children[i].readRecords.push(record[j]);
-		// 							console.log(user.children[i].readRecords);
-		// 						}
-		// 					}
-		// 					console.log(user.children[i]);
-		// 					if(i == user.children.length - 1) {
-		// 						console.log(user);
-		// 						res.send(user);
-		// 					}
-		// 				});
-		// 			}
-		// 		}
-		// 		else
-		// 			res.send(user);
-		// 	}
-		// });
 	},
 	addHYUser: function(req, res) {
 		var user = {
